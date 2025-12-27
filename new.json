@@ -1,0 +1,50 @@
+{
+  "page_metadata": {
+    "page_number": 6,
+    "source": "Bureau of Energy Efficiency",
+    "section": "1. Energy Scenario"
+  },
+  "content": [
+    {
+      "type": "text",
+      "value": "Saudi Arabia was the largest oil producer in the world (end of 2013) followed closely by Russian Federation and US. [cite: 2] Although the United States ranks third in terms of oil production, it only ranks tenth in terms of proven oil reserves. [cite: 3] The top oil producing countries in 2013 are given in Table 1.4. [cite: 4] As against the top producing countries (end of 2013), India's share is 42 million tonnes and share of total is 1%. [cite: 5]"
+    },
+    {
+      "type": "table",
+      "title": "Table 1.4 Top Oil Producing Countries by End of 2013",
+      "headers": ["Region", "Million tonnes per year", "Share of total, %"],
+      "rows": [
+        ["Saudi Arabia", "542.3", "13.1"],
+        ["Russia", "531.3", "12.9"],
+        ["US", "446.2", "10.8"],
+        ["China", "208.1", "5.0"],
+        ["Canada", "193", "4.7"],
+        ["Iran", "166.1", "4.0"],
+        ["Iraq", "153.2", "3.7"],
+        ["Nigeria", "111.3", "2.7"],
+        ["Others", "2351.5", "43.1"],
+        ["World", "4130.2", "100"]
+      ],
+      "footer": "Source: BP Statistical Review of World Energy June 2014 [cite: 8]"
+    },
+    {
+      "type": "text",
+      "value": "If production continues at today's rate, many of the major producers such as US, Russia, China will have their oil fields largely depleted within a decade. [cite: 9] At that point of time, world may have to depend mostly on Middle East for oil. [cite: 10] The Middle East overall reserves-to-production ratio for conventional oil (average of about 78 years) is much higher than that of non-Middle East countries. [cite: 11]"
+    },
+    {
+      "type": "text",
+      "value": "Since unconventional oil resources, including oil shale, oil sands, extra heavy oil and natural bitumen are taken into account as oil, the global oil reserves will be four times larger than the current conventional reserves. [cite: 12] Oil still remains the premier energy resource with a wide range of possible applications. [cite: 13] Its main use however, will be shifting towards transport and the petrochemical sector. [cite: 14] In future oil's position at the top of the energy ladder will face a strong challenge from other fuels such as natural gas. [cite: 15]"
+    },
+    {
+      "type": "image",
+      "title": "Process of Oil and Gas Formation",
+      "steps": [
+        "Tiny sea plants and animals died and were buried on the ocean floor. [cite: 18]",
+        "Over time, they were covered by layers of silt and sand. [cite: 19]",
+        "Over millions of years, the remains were buried deeper and deeper. [cite: 20]",
+        "The enormous heat and pressure turned them into oil and gas. [cite: 21]",
+        "Today, we drill down the layers of sand, silt and rock to reach the rock formations that contain oil and gas deposits. [cite: 22]"
+      ]
+    }
+  ]
+}
