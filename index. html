@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dowsing Focus - Kerala Districts</title>
+    <style>
+        :root { --primary: #2c3e50; --yes: #27ae60; --no: #e74c3c; --bg: #f0f2f5; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        
+        .app-container { width: 100%; max-width: 500px; height: 90vh; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: flex; flex-direction: column; position: relative; }
+        
+        /* Navigation Header */
+        .header { padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+        
+        /* Main Dowsing Area */
+        .slider-container { flex: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
+        .number-display { font-size: 10rem; font-weight: 800; color: var(--primary); transition: transform 0.3s ease; }
+        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.05); border: none; font-size: 2rem; padding: 20px; cursor: pointer; border-radius: 50%; }
+        #prev-btn { left: 10px; }
+        #next-btn { right: 10px; }
+
+        /* Bottom Controls */
+        .controls { padding: 30px; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 15px; }
+        .yes-no-group { display: flex; gap: 20px; }
+        .btn-action { flex: 1; padding: 20px; border: none; border-radius: 12px; font-size: 1.2rem; font-weight: bold; cursor: pointer; color: white; transition: opacity 0.2s; }
+        .btn-yes { background: var(--yes); }
+        .btn-no { background: var(--no); }
+        .btn-result { background: var(--primary); width: 100%; }
+        
+        /* Feedback State Indicator */
+        .status-dot { width: 12px; height: 12px; border-radius: 50%; background: #ccc; margin: 0 3px; display: inline-block; }
+        .status-dot.active { background: var(--primary); }
+        .status-dot.yes { background: var(--yes); }
+        .status-dot.no { background: var(--no); }
+
+        .hidden { display: none; }
+        .results-view { padding: 20px; overflow-y: auto; height: 100%; }
+        .res-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+
+<div class="app-container" id="main-ui">
+    <div id="dowsing-view" style="display:contents">
+        <div class="header">
+            <span id="progress-text">1 / 14</span>
+            <div id="dots-container"></div>
+            <button onclick="location.reload()" style="background:none; border:none; cursor:pointer;">🔄 Reset</button>
+        </div>
+
+        <div class="slider-container">
+            <button class="nav-arrow" id="prev-btn" onclick="move(-1)">‹</button>
+            <div class="number-display" id="big-number">1</div>
+            <button class="nav-arrow" id="next-btn" onclick="move(1)">›</button>
+        </div>
+
+        <div class="controls">
+            <div class="yes-no-group">
+                <button class="btn-action btn-yes" onclick="setVote('yes')">YES</button>
+                <button class="btn-action btn-no" onclick="setVote('no')">NO</button>
+            </div>
+            <button class="btn-action btn-result" onclick="showResults()">Reveal Districts</button>
+        </div>
+    </div>
+
+    <div id="results-view" class="results-view hidden">
+        <h2 style="text-align: center;">Dowsing Results</h2>
+        <div id="results-list"></div>
+        <button class="btn-action btn-result" style="margin-top:20px" onclick="toggleView()">Back to Dowsing</button>
+    </div>
+</div>
+
+<script>
+    const districts = ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"];
+    
+    let currentIndex = 0;
+    let mapping = [];
+
+    function init() {
+        // Randomize and stay constant until refresh
+        let shuffled = [...districts].sort(() => Math.random() - 0.5);
+        mapping = shuffled.map((d, i) => ({
+            id: i + 1,
+            district: d,
+            status: null // 'yes', 'no', or null
+        }));
+        updateUI();
+        createDots();
+    }
+
+    function createDots() {
+        const container = document.getElementById('dots-container');
+        container.innerHTML = mapping.map(() => `<span class="status-dot"></span>`).join('');
+    }
+
+    function move(step) {
+        currentIndex = (currentIndex + step + mapping.length) % mapping.length;
+        updateUI();
+    }
+
+    function setVote(val) {
+        mapping[currentIndex].status = val;
+        updateUI();
+        // Auto move to next for better flow
+        setTimeout(() => move(1), 300);
+    }
+
+    function updateUI() {
+        document.getElementById('big-number').innerText = mapping[currentIndex].id;
+        document.getElementById('progress-text').innerText = `${currentIndex + 1} / ${mapping.length}`;
+        
+        // Update dots
+        const dots = document.querySelectorAll('.status-dot');
+        dots.forEach((dot, i) => {
+            dot.className = 'status-dot';
+            if(i === currentIndex) dot.classList.add('active');
+            if(mapping[i].status) dot.classList.add(mapping[i].status);
+        });
+
+        // Highlight number if already voted
+        const numDisp = document.getElementById('big-number');
+        numDisp.style.color = mapping[currentIndex].status === 'yes' ? 'var(--yes)' : 
+                              mapping[currentIndex].status === 'no' ? 'var(--no)' : 'var(--primary)';
+    }
+
+    function toggleView() {
+        document.getElementById('dowsing-view').classList.toggle('hidden');
+        document.getElementById('results-view').classList.toggle('hidden');
+    }
+
+    function showResults() {
+        const list = document.getElementById('results-list');
+        const yesVotes = mapping.filter(m => m.status === 'yes');
+        
+        list.innerHTML = yesVotes.length > 0 
+            ? yesVotes.map(m => `<div class="res-item"><b>Number ${m.id}</b> <span>${m.district}</span></div>`).join('')
+            : "<p style='text-align:center'>No 'Yes' selections made.</p>";
+        
+        toggleView();
+    }
+
+    init();
+</script>
+</body>
+</html>
